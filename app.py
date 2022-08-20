@@ -62,16 +62,12 @@ def home():
         model = loadModel()
         [res] = model.predict([data["text"]])
 
-        buffer = list(res)
         final = []
 
-        for _ in range(len(LABELS)):
-            curr = max(buffer)
-            currInd = buffer.index(curr)
-            buffer.remove(curr)
+        for ind, prob in enumerate(res):
             final.append({
-                "probability": str(curr),
-                "label": LABELS[currInd].capitalize(),
+                "probability": str(prob),
+                "label": LABELS[ind].capitalize(),
             })
 
         return {
